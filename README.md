@@ -81,13 +81,13 @@ libraryDependencies ++= Seq(
 
 ### データベースの設定
 
-#### データベースの作成
+#### データベースの作成
 
 ```sql
 CREATE DATABASE dev_db;
 ```
 
-#### application.confにデータベース設定を追加
+#### application.confにデータベース設定を追加
 
 ```conf/application.conf
 slick.dbs.default.driver="slick.driver.MySQLDriver$"
@@ -227,7 +227,7 @@ app
 |インフラ層| app/models | Tables.scala | // TODO |
 |リポジトリ層| app/repositories | UserRepository.scala | // TODO|
 |ドメイン層| app/domain | UserService.scala | 業務に関するロジックを定義します。|
-| - | app/controllers| UserController.scala | ルーティング従ってアクションを定義します。| 
+| - | app/controllers| UserController.scala | ルーティング従ってアクションを定義します。| 
 | - | - | conf/routes | ルーティングを定義します。 |
 | - | - | app/Module.scala | 依存性の注入(DI)を定義します。 | 
 
@@ -309,10 +309,10 @@ POST    /api/users/remove/:id       controllers.UserController.remove(id: Long)
 
 ### リポジトリの作成
 
-データベースに接続してサービス層とデータをやりとりするためのリポジトリを実装します。
+データベースに接続してサービス層とデータをやりとりするためのリポジトリを実装します。
 開発対象は`app/repositories/UserRepository.scala`になります。
 
-まずはじめに、ユーザ情報を格納するための、`User`ケースクラス、`UserRepository`トレイトを用意します。
+まずはじめに、ユーザ情報を格納するための、`User`ケースクラス、`UserRepository`トレイトを用意します。
 
 ```scala
 package repositories
@@ -356,7 +356,7 @@ trait UserRepository {
 * TODO
 * TODO
 
-次に、UserRepositoryトレイトを実装したダミーのデータを返す`UserRepositoryImplWithDummy`クラスを実装してみます。`UserRepository.scala`と同じファイルに定義してみてください。
+次に、UserRepositoryトレイトを実装したダミーのデータを返す`UserRepositoryImplWithDummy`クラスを実装してみます。`UserRepository.scala`と同じファイルに定義してみてください。
 
 ```scala
 **
