@@ -3,7 +3,7 @@ package repositories
 import models.Tables._
 import akka.actor.ActorSystem
 import javax.inject.Inject
-import models.Tables
+import models.User
 import play.api.MarkerContext
 import play.api.libs.concurrent.CustomExecutionContext
 import play.api.db.slick._
@@ -12,12 +12,6 @@ import scalikejdbc._
 import scalikejdbc.config._
 
 import scala.concurrent.Future
-
-// ユーザ情報を保持するケースクラス
-final case class User(id: Long,
-                      name: String,
-                      companyId: Int,
-                      companyName: Option[String] = None)
 
 /**
   * UserRepositoryのトレイト
@@ -157,11 +151,22 @@ class UserRepositoryImplWithSlick @Inject()(protected val dbConfigProvider: Data
       })
   }
 
-  override def insert(data: User)(implicit mc: MarkerContext): Future[Long] = ???
+  override def insert(user: User)(implicit mc: MarkerContext): Future[Long] = {
+    val insertRecord = UsersRow(0, user.name, user.companyId)
+    db.run(Users += insertRecord)
+  }.map(_.toLong)
 
-  override def update(data: User)(implicit mc: MarkerContext): Future[Long] = ???
+  override def update(user: User)(implicit mc: MarkerContext): Future[Long] = {
+    val updateRow = UsersRow(user.id, user.name, user.companyId)
+    val query = Users.filter(t => t.id === user.id.bind).update(updateRow)
+    db.run(query)
+  }.map(_.toLong)
 
-  override def delete(id: Long)(implicit mc: MarkerContext): Future[Long] = ???
+  override def delete(id: Long)(implicit mc: MarkerContext): Future[Long] = {
+    val query = Users.filter(t => t.id === id.bind).delete
+    db.run(query)
+  }.map(_.toLong)
+
 }
 
 

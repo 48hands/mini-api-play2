@@ -5,10 +5,25 @@
 以下のAPIを開発します。
 
 * ユーザリスト取得API(GET)
+```
+curl -XGET http://localhost:9000/api/users/list
+```
 * ユーザ情報取得API(GET)
+```
+curl -XGET http://localhost:9000/api/users/show/1
+```
 * ユーザ新規作成API(POST)
+```
+curl -H "Content-type: application/json" -XPOST -d '{"name":"Jack Hanma", "companyId":1}' http://localhost:9000/api/users/create
+```
 * ユーザ情報更新API(PUT)
+```
+curl -H "Content-type: application/json" -XPOST -d '{"id":1, "name":"Katsumi Orochi", "companyId":2}' http://localhost:9000/api/users/update
+```
 * ユーザ削除API(POST)
+```
+curl -XPOST http://localhost:9000/api/users/remove/3
+```
 
 ### 環境情報
 

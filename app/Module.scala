@@ -1,5 +1,5 @@
 import com.google.inject.AbstractModule
-import domain._
+import services._
 import javax.inject._
 import net.codingwell.scalaguice.ScalaModule
 import play.api.{Configuration, Environment}
