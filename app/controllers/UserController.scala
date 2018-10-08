@@ -14,7 +14,7 @@ import models.User
 /**
   * ユーザコントローラクラス
   *
-  * @param cc      ControllerComponentes
+  * @param cc      ControllerComponents
   * @param service UserService DIによって外から注入する。
   * @param ec      ExecutionContext
   */
