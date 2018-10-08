@@ -16,7 +16,7 @@ class Module(environment: Environment, configuration: Configuration)
 
   override def configure(): Unit = {
     // UserRepositoryのDI
-    bind[UserRepository].to[UserRepositoryImplWithScalikeJDBC].in[Singleton]
+    bind[UserRepository].to[UserRepositoryImplWithSlick].in[Singleton]
 
     // UserServiceのDI
     bind[UserService].to[UserServiceImpl].in[Singleton]

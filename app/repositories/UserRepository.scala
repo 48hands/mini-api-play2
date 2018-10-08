@@ -3,17 +3,20 @@ package repositories
 import models.Tables._
 import akka.actor.ActorSystem
 import javax.inject.Inject
+import models.Tables
 import play.api.MarkerContext
 import play.api.libs.concurrent.CustomExecutionContext
 import play.api.db.slick._
 import slick.jdbc.JdbcProfile
 import scalikejdbc._
 import scalikejdbc.config._
+
 import scala.concurrent.Future
 
 // ユーザ情報を保持するケースクラス
-final case class User(id: Long, name: String,
-                      companyId: Option[Int],
+final case class User(id: Long,
+                      name: String,
+                      companyId: Int,
                       companyName: Option[String] = None)
 
 /**
@@ -41,15 +44,15 @@ class UserRepositoryImplWithDummy @Inject()()(implicit ec: UserRepositoryExecuti
 
   override def list()(implicit mc: MarkerContext): Future[Seq[User]] = Future {
     Seq(
-      User(1000, "Baki Hanma", Some(1)),
-      User(1001, "Yujiro Hanma", Some(1)),
-      User(1002, "Doppo Orochi", Some(2)),
-      User(1003, "Izo Motobe", None),
+      User(1000, "Baki Hanma", 1),
+      User(1001, "Yujiro Hanma", 1),
+      User(1002, "Doppo Orochi", 2),
+      User(1003, "Izo Motobe", 2),
     )
   }
 
   override def find(id: Long)(implicit mc: MarkerContext): Future[Option[User]] = Future {
-    Some(User(id, "Pickle", Some(1), Some("NTTDATA")))
+    Some(User(id, "Pickle", 1, Some("NTTDATA")))
   }
 
   override def insert(user: User)(implicit mc: MarkerContext): Future[Long] = Future {
@@ -118,10 +121,10 @@ class UserRepositoryImplWithScalikeJDBC @Inject()()(implicit ec: UserRepositoryE
   }
 
   private[this] def createUser(rs: WrappedResultSet): User =
-    User(rs.long("id"), rs.string("name"), rs.intOpt("company_id"))
+    User(rs.long("id"), rs.string("name"), rs.int("company_id"))
 
   private[this] def getUser(rs: WrappedResultSet): User =
-    User(rs.long("id"), rs.string("name"), rs.intOpt("company_id"), rs.stringOpt("company_name"))
+    User(rs.long("id"), rs.string("name"), rs.int("company_id"), rs.stringOpt("company_name"))
 
 }
 
@@ -135,9 +138,24 @@ class UserRepositoryImplWithSlick @Inject()(protected val dbConfigProvider: Data
                                            (implicit ec: UserRepositoryExecutionContext)
   extends UserRepository with HasDatabaseConfigProvider[JdbcProfile] {
 
-  override def list()(implicit mc: MarkerContext): Future[Seq[User]] = ???
+  import slick.jdbc.MySQLProfile.api._
 
-  override def find(id: Long)(implicit mc: MarkerContext): Future[Option[User]] = ???
+  override def list()(implicit mc: MarkerContext): Future[Seq[User]] =
+    db.run(Users.sortBy(_.id).result)
+      .map(_.map { r =>
+        User(r.id, r.name, r.companyId)
+      })
+
+  override def find(id: Long)(implicit mc: MarkerContext): Future[Option[User]] = {
+    val query = for {
+      (u, c) <- Users.filter(_.id === id.bind) join Companies on (_.companyId === _.id)
+    } yield (u.id, u.name, u.companyId, c.name)
+
+    db.run(query.result.headOption)
+      .map(_.map { r =>
+        User(r._1, r._2, r._3, Some(r._4))
+      })
+  }
 
   override def insert(data: User)(implicit mc: MarkerContext): Future[Long] = ???
 

@@ -83,7 +83,7 @@ trait Tables {
    *  @param id Database column id SqlType(INT), AutoInc, PrimaryKey
    *  @param name Database column name SqlType(VARCHAR), Length(20,true)
    *  @param companyId Database column company_id SqlType(INT) */
-  final case class UsersRow(id: Int, name: String, companyId: Int)
+  final case class UsersRow(id: Long, name: String, companyId: Int)
   /** GetResult implicit for fetching UsersRow objects using plain SQL queries */
   implicit def GetResultUsersRow(implicit e0: GR[Int], e1: GR[String]): GR[UsersRow] = GR{
     prs => import prs._
@@ -96,7 +96,7 @@ trait Tables {
     def ? = (Rep.Some(id), Rep.Some(name), Rep.Some(companyId)).shaped.<>({r=>import r._; _1.map(_=> UsersRow.tupled((_1.get, _2.get, _3.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column id SqlType(INT), AutoInc, PrimaryKey */
-    val id: Rep[Int] = column[Int]("id", O.AutoInc, O.PrimaryKey)
+    val id: Rep[Long] = column[Long]("id", O.AutoInc, O.PrimaryKey)
     /** Database column name SqlType(VARCHAR), Length(20,true) */
     val name: Rep[String] = column[String]("name", O.Length(20,varying=true))
     /** Database column company_id SqlType(INT) */
