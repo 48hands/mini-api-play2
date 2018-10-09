@@ -266,9 +266,8 @@ app
 
 |レイヤー| パッケージ名 | ファイル名 | 説明 |
 |:---|:----|:-----|:----|
-|インフラ層| app/models | Tables.scala | // TODO |
 |モデル層| app/models | User.scala | DTO的なクラスを定義します。 |
-|リポジトリ層| app/repositories | UserRepository.scala | // TODO|
+|リポジトリ層| app/repositories | UserRepository.scala | DAO的なクラスを定義します。|
 |サービス層| app/services | UserService.scala | 業務に関するロジックを定義します。|
 | - | app/controllers| UserController.scala | ルーティング従ってアクションを定義します。| 
 | - | - | conf/routes | ルーティングを定義します。 |
