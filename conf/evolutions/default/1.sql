@@ -9,7 +9,7 @@ INSERT INTO dev_db.companies VALUES (1, 'NTTDATA');
 INSERT INTO dev_db.companies VALUES (2, 'NTTDOCOMO');
 
 CREATE TABLE IF NOT EXISTS dev_db.users (
-   `id` INTEGER AUTO_INCREMENT
+   `id` INTEGER(20) AUTO_INCREMENT
   ,`name` VARCHAR(20) NOT NULL
   ,`company_id` INTEGER NOT NULL
   ,PRIMARY KEY (`id`)
