@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS dev_db.companies (
    ,PRIMARY KEY(`id`)
 );
 
-INSERT INTO dev_db.companies VALUES (1, 'NTTDATA');
-INSERT INTO dev_db.companies VALUES (2, 'NTTDOCOMO');
+INSERT INTO dev_db.companies VALUES (1, 'Underground Stadium');
+INSERT INTO dev_db.companies VALUES (2, 'Arizona State Prison');
 
 CREATE TABLE IF NOT EXISTS dev_db.users (
    `id` INTEGER(20) AUTO_INCREMENT
@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS dev_db.users (
   ,FOREIGN KEY (`company_id`) REFERENCES dev_db.companies (`id`)
 );
 
-INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Taro Yamada', 1);
-INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Hanako Sato', 2);
+INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Retsu Kaio', 1);
+INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Mr.Unchain', 2);
 
 # --- !Downs
 DROP TABLE IF EXISTS dev_db.users;

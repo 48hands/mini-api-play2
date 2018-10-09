@@ -46,7 +46,7 @@ class UserRepositoryImplWithDummy @Inject()()(implicit ec: UserRepositoryExecuti
   }
 
   override def find(id: Long)(implicit mc: MarkerContext): Future[Option[User]] = Future {
-    Some(User(id, "Pickle", 1, Some("NTTDATA")))
+    Some(User(id, "Pickle", 1, Some("Underground sewer")))
   }
 
   override def insert(user: User)(implicit mc: MarkerContext): Future[Long] = Future {

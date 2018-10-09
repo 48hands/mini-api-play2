@@ -1,4 +1,4 @@
-# Play Framework2.6のAPI作成ハンズオン
+# Play Framework2.6のAPI簡易サンプル（説明用）
 
 ## API開発概要
 
@@ -174,8 +174,8 @@ CREATE TABLE IF NOT EXISTS dev_db.companies (
    ,PRIMARY KEY(`id`)
 );
 
-INSERT INTO dev_db.companies VALUES (1, 'NTTDATA');
-INSERT INTO dev_db.companies VALUES (2, 'NTTDOCOMO');
+INSERT INTO dev_db.companies VALUES (1, 'Underground Stadium');
+INSERT INTO dev_db.companies VALUES (2, 'Arizona State Prison');
 
 CREATE TABLE IF NOT EXISTS dev_db.users (
    `id` INTEGER(20) AUTO_INCREMENT
@@ -185,8 +185,8 @@ CREATE TABLE IF NOT EXISTS dev_db.users (
   ,FOREIGN KEY (`company_id`) REFERENCES dev_db.companies (`id`)
 );
 
-INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Taro Yamada', 1);
-INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Hanako Sato', 2);
+INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Retsu Kaio', 1);
+INSERT INTO dev_db.users(`name`, `company_id`) VALUES ('Mr.Unchain', 2);
 
 # --- !Downs
 DROP TABLE IF EXISTS dev_db.users;
@@ -316,7 +316,7 @@ import models.User
 /**
   * ユーザコントローラクラス
   *
-  * @param cc ControllerComponentes
+  * @param cc ControllerComponents
   * @param service UserService DIによって外から注入する。
   * @param ec ExecutionContext
   */
@@ -453,7 +453,7 @@ class UserRepositoryImplWithDummy @Inject()()(implicit ec: UserRepositoryExecuti
   }
 
   override def find(id: Long)(implicit mc: MarkerContext): Future[Option[User]] = Future {
-    Some(User(id, "Pickle", 1, Some("NTTDATA")))
+    Some(User(id, "Pickle", 1, Some("Underground sewer")))
   }
 
   override def insert(user: User)(implicit mc: MarkerContext): Future[Long] = Future {
@@ -789,7 +789,7 @@ curl -XGET http://localhost:9000/api/users/list
 * ユーザ情報取得API(GET)
 ```
 curl -XGET http://localhost:9000/api/users/show/1
-{"result":{"id":1,"name":"Pickle","companyId":1,"companyName":"NTTDATA"}}
+{"result":{"id":1,"name":"Pickle","companyId":1,"companyName":"Underground sewer"}}
 ```
 * ユーザ新規作成API(POST)
 ```
