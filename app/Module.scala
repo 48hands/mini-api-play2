@@ -17,8 +17,13 @@ class Module(environment: Environment, configuration: Configuration)
   override def configure(): Unit = {
     // UserRepositoryのDI
     bind[UserRepository].to[UserRepositoryImplWithSlick].in[Singleton]
-
     // UserServiceのDI
     bind[UserService].to[UserServiceImpl].in[Singleton]
+
+    // CompanyRepositoryのDI
+    bind[CompanyRepository].to[CompanyRepositoryImpl].in[Singleton]
+    // CompanyServiceのDI
+    bind[CompanyService].to[CompanyServiceImpl].in[Singleton]
+
   }
 }

@@ -1,6 +1,12 @@
 # User API
-GET     /api/users/list             controllers.UserController.list
-GET     /api/users/show/:id         controllers.UserController.show(id: Long)
-POST    /api/users/create           controllers.UserController.create
-POST    /api/users/update           controllers.UserController.update
-POST    /api/users/remove/:id       controllers.UserController.remove(id: Long)
+GET         /api/users/list                  controllers.UserController.list
+GET         /api/users/show/:id              controllers.UserController.show(id: Long)
+POST        /api/users/create                controllers.UserController.create
+POST        /api/users/update                controllers.UserController.update
+POST        /api/users/remove/:id            controllers.UserController.remove(id: Long)
+
+# Comapny API
+GET         /api/companies/list              controllers.CompanyController.list
+POST        /api/companies/create            controllers.CompanyController.create
+POST        /api/companies/update            controllers.CompanyController.update
+POST        /api/companies/remove/:id        controllers.CompanyController.remove(id: Int)

@@ -4,6 +4,8 @@
 
 以下のAPIを開発します。
 
+**ユーザAPI**
+
 * ユーザリスト取得API(GET)
 ```
 curl -XGET http://localhost:9000/api/users/list
@@ -23,6 +25,25 @@ curl -H "Content-type: application/json" -XPOST -d '{"id":1, "name":"Katsumi Oro
 * ユーザ削除API(POST)
 ```
 curl -XPOST http://localhost:9000/api/users/remove/3
+```
+
+**会社API**
+
+* 会社リスト取得API(GET)
+```
+curl -XGET http://localhost:9000/api/companies/list
+```
+* 会社新規作成API(POST)
+```
+curl -H "Content-type: application/json" -XPOST -d '{"id": 3, "name":"My Home"}' http://localhost:9000/api/companies/create
+```
+* 会社情報更新API(POST)
+```
+curl -H "Content-type: application/json" -XPOST -d '{"id":3, "name":"Your Home"}' http://localhost:9000/api/companies/update
+```
+* 会社情報削除API(POST)
+```
+curl -XPOST http://localhost:9000/api/companies/remove/3
 ```
 
 ### 環境情報
@@ -763,22 +784,27 @@ sbt run
 * ユーザリスト取得API(GET)
 ```
 curl -XGET http://localhost:9000/api/users/list
+"users":[{"id":1000,"name":"Baki Hanma","companyId":1},{"id":1001,"name":"Yujiro Hanma","companyId":1},{"id":1002,"name":"Doppo Orochi","companyId":2},{"id":1003,"name":"Izo Motobe","companyId":2}]}
 ```
 * ユーザ情報取得API(GET)
 ```
 curl -XGET http://localhost:9000/api/users/show/1
+{"result":{"id":1,"name":"Pickle","companyId":1,"companyName":"NTTDATA"}}
 ```
 * ユーザ新規作成API(POST)
 ```
 curl -H "Content-type: application/json" -XPOST -d '{"name":"Jack Hanma", "companyId":1}' http://localhost:9000/api/users/create
+{"result":"success"}
 ```
 * ユーザ情報更新API(POST)
 ```
 curl -H "Content-type: application/json" -XPOST -d '{"id":1, "name":"Katsumi Orochi", "companyId":2}' http://localhost:9000/api/users/update
+{"result":"success"}
 ```
 * ユーザ削除API(POST)
 ```
 curl -XPOST http://localhost:9000/api/users/remove/1
+{"result":"success"}
 ```
 
 ### データベースアクセスの実装追加 - ScalikeJDBCで接続
