@@ -342,7 +342,6 @@ object UserController {
 ### ルーティングの定義
 
 `conf/routes`を次のように定義します。
-``
 
 ```routes
 # User API
